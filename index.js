@@ -145,9 +145,11 @@ module.exports = function railsErbLoader (source, map) {
   var config = defaults({}, getOptions(loader), {
     dependenciesRoot: 'app',
     runner: './bin/rails runner',
-    lookupPaths: [this.context],
+    lookupPaths: [],
     timeout: 0
   })
+
+  config.lookupPaths.unshift(this.context);
 
   // Dependencies are only useful in development, so don't bother searching the
   // file for them otherwise.

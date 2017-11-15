@@ -94,6 +94,7 @@ Can be configured with [UseEntry#options](https://webpack.js.org/configuration/m
 | Option | Default | Description |
 | ------ | ------- | ----------- |
 | `dependenciesRoot` | `"app"` | The root of your Rails project, relative to webpack's working directory. |
+| `lookupPaths` | `[]` | ActionView will search those paths for the requested template (`render`). |
 | `runner` | `"./bin/rails runner"` | Command to run Ruby scripts, relative to webpack's working directory. |
 | `timeout` | `0` | Timeout for the runner task in seconds. `0` is no timeout. Set this if you want a hanging runner to error out the build.
 

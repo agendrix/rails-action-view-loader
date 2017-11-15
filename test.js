@@ -22,7 +22,8 @@ function compile (config, callback) {
           options: {
             runner: config.runner,
             timeout: config.timeout,
-            dependenciesRoot: './test/dependencies'
+            dependenciesRoot: './test/dependencies',
+            lookupPaths: [path.resolve('./test/erb')]
           }
         }
       ]
@@ -68,6 +69,14 @@ test('loads a html file with render and content_for', function (done) {
     expect(stats.compilation.errors).toEqual([])
     expectInOutput("<h1>Header</h1>")
     expectInOutput("<p>Lorem ipsum sit dolor amet</p>")
+    done()
+  })
+})
+
+test('loads a html file with render in parent directory (lookupPaths)', function (done) {
+  compile2({ file: 'authors/index.html.erb' }, done, function (stats) {
+    expect(stats.compilation.errors).toEqual([])
+    expectInOutput("<h1>Header</h1>")
     done()
   })
 })
