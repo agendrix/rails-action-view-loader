@@ -1,31 +1,22 @@
-require 'timeout'
+require "timeout"
+require "action_view"
 
-delimiter, engine, timeout = ARGV
+delimiter, timeout, *lookup_paths = ARGV
 timeout = Float(timeout)
 
-handler = case engine
-  when 'erubi'
-    require 'erubi'
-    Erubi::Engine
-  when 'erubis'
-    require 'erubis'
-    Erubis::Eruby
-  when 'erb'
-    require 'erb'
-    ERB
-  else raise "Unknown templating engine `#{engine}`"
+def render(lookup_paths, source)
+  lookup_context = ActionView::LookupContext.new(lookup_paths)
+  template_handler = ActionView::Template.handler_for_extension("erb")
+  template = ActionView::Template.new(source, "inline template", template_handler, format: "text")
+
+  ActionView::Base.new(lookup_context).render(template: template)
 end
 
 begin
   Timeout.timeout(timeout) do
     source = STDIN.read
-
-    if engine == 'erubi'
-      puts "#{delimiter}#{eval(handler.new(source).src)}#{delimiter}"
-    else
-      puts "#{delimiter}#{handler.new(source).result}#{delimiter}"
-    end
+    puts "#{delimiter}#{render(lookup_paths, source)}#{delimiter}"
   end
 rescue Timeout::Error
-  raise "rails-erb-loader took longer than the specified #{timeout} second timeout"
+  raise "rails-action-view-loader took longer than the specified #{timeout} second timeout"
 end

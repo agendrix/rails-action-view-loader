@@ -1,4 +1,3 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-gem 'erubi'
-gem 'erubis'
+gem "actionview", "~> 5.1"

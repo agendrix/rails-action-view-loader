@@ -1,11 +1,8 @@
-# rails-erb-loader
+# rails-action-view-loader
 
-[![npm version](https://img.shields.io/npm/v/rails-erb-loader.svg?style=flat-square)](https://www.npmjs.com/package/rails-erb-loader)
-[![npm downloads](https://img.shields.io/npm/dm/rails-erb-loader.svg?style=flat-square)](https://npm-stat.com/charts.html?package=rails-erb-loader&from=2016-11-07)
-[![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com/)
-[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+Forked from [rails-erb-loader](https://github.com/usabilityhub/rails-erb-loader).
 
-> Embedded Ruby (`.erb`) webpack loader for Ruby projects.
+> Embedded Ruby (`.erb`) webpack loader for Ruby projects that supports ActionView helpers (render, content_for, etc.).
 
 Compiles Embedded Ruby template files in any Ruby project. Files are built using either the `Erubis` or `ERB` gem.
 
@@ -23,18 +20,18 @@ Compiles Embedded Ruby template files in any Ruby project. Files are built using
 ### npm
 
 ```console
-$ npm install rails-erb-loader --save-dev
+$ npm install rails-action-view-loader --save-dev
 ```
 
 ### yarn
 
 ```console
-$ yarn add -D rails-erb-loader
+$ yarn add -D rails-action-view-loader
 ```
 
 ## Usage
 
-Add `rails-erb-loader` to your rules.
+Add `rails-action-view-loader` to your rules.
 
 ```js
 // webpack.config.js
@@ -45,7 +42,7 @@ module.exports = {
         {
           test: /\.erb$/,
           enforce: 'pre',
-          loader: 'rails-erb-loader'
+          loader: 'rails-action-view-loader'
         },
       ]
     }
@@ -97,7 +94,6 @@ Can be configured with [UseEntry#options](https://webpack.js.org/configuration/m
 | Option | Default | Description |
 | ------ | ------- | ----------- |
 | `dependenciesRoot` | `"app"` | The root of your Rails project, relative to webpack's working directory. |
-| `engine` | `"erb"` | ERB Template engine, `"erubi"`, `"erubis"` and `"erb"` are supported. |
 | `runner` | `"./bin/rails runner"` | Command to run Ruby scripts, relative to webpack's working directory. |
 | `timeout` | `0` | Timeout for the runner task in seconds. `0` is no timeout. Set this if you want a hanging runner to error out the build.
 
@@ -105,7 +101,7 @@ For example, if your webpack process is running in a subdirectory of your Rails 
 
 ```js
 {
-  loader: 'rails-erb-loader',
+  loader: 'rails-action-view-loader',
   options: {
     runner: '../bin/rails runner',
     dependenciesRoot: '../app',
@@ -117,10 +113,9 @@ Also supports building without Rails:
 
 ```js
 {
-  loader: 'rails-erb-loader',
+  loader: 'rails-action-view-loader',
   options: {
-    runner: 'ruby',
-    engine: 'erb'
+    runner: 'ruby'
   }
 }
 ```
@@ -147,7 +142,7 @@ To watch all files in a directory, end the path in a `/`.
 
 ## Contribute
 
-Questions, bug reports and pull requests welcome. See [GitHub issues](https://github.com/usabilityhub/rails-erb-loader/issues).
+Questions, bug reports and pull requests welcome. See [GitHub issues](https://github.com/agendrix/rails-action-view-loader/issues).
 
 ## License
 

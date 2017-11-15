@@ -1,7 +1,7 @@
 {
-  "name": "rails-erb-loader",
-  "version": "5.2.1",
-  "description": "Embedded Ruby (`.erb`) `webpack` loader for Ruby projects.",
+  "name": "rails-action-view-loader",
+  "version": "1.0.1",
+  "description": "Embedded Ruby (`.erb`) webpack loader for Ruby projects that supports ActionView helpers (render, content_for, etc.).",
   "main": "index.js",
   "engines": {
     "node": ">=0.10.0"
@@ -14,17 +14,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/usabilityhub/rails-erb-loader.git"
+    "url": "git+https://github.com/agendrix/rails-action-view-loader.git"
   },
   "keywords": [
     "erb",
     "loader",
     "webpack",
     "ruby",
-    "rails"
+    "rails",
+    "action view"
   ],
-  "author": "Rhys van der Waerden <rhys.vdw@gmail.com> (https://github.com/rhys-vdw)",
+  "author": "Charles Vallières <charles@agendrix.com> (https://github.com/charlesvallieres)",
   "contributors": [
+    "Rhys van der Waerden <rhys.vdw@gmail.com> (https://github.com/rhys-vdw)",
     "Ammar Alammar (https://github.com/a3ammar)",
     "Guillermo Iguaran <guilleiguaran@gmail.com> (https://github.com/guilleiguaran)",
     "Jeremiah Atwood (https://github.com/atwoodjw)",
@@ -35,9 +37,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/usabilityhub/rails-erb-loader/issues"
+    "url": "https://github.com/agendrix/rails-action-view-loader/issues"
   },
-  "homepage": "https://github.com/usabilityhub/rails-erb-loader#readme",
+  "homepage": "https://github.com/agendrix/rails-action-view-loader#readme",
   "dependencies": {
     "loader-utils": "^1.1.0",
     "lodash.defaults": "^4.2.0"
@@ -51,7 +53,8 @@
     "eslint-plugin-node": "^3.0.5",
     "eslint-plugin-promise": "^3.3.0",
     "eslint-plugin-standard": "^2.0.1",
+    "html-loader": "^0.5.1",
     "jest": "^20.0.4",
-    "webpack": "^3.0.0"
+    "webpack": "^3.8.1"
   }
 }

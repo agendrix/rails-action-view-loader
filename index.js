@@ -74,8 +74,9 @@ function transformSource (runner, config, source, map, callback) {
     runner.arguments.concat(
       runnerPath,
       ioDelimiter,
-      config.engine,
       config.timeout
+    ).concat(
+      config.lookupPaths
     ),
     function (error, stdout, stderr) {
       // Output is delimited to filter out unwanted warnings or other output
@@ -144,7 +145,7 @@ module.exports = function railsErbLoader (source, map) {
   var config = defaults({}, getOptions(loader), {
     dependenciesRoot: 'app',
     runner: './bin/rails runner',
-    engine: 'erb',
+    lookupPaths: [this.context],
     timeout: 0
   })
 

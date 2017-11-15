@@ -7,18 +7,20 @@ var fs = new MemoryFS()
 
 function compile (config, callback) {
   config.runner = config.runner || 'ruby'
-  config.engine = config.engine || 'erb'
 
   var compiler = webpack({
     entry: './test/erb/' + config.file,
     module: {
       loaders: [
         {
+          test: /\.html/,
+          loader: 'html-loader'
+        },
+        {
           test: /\.erb$/,
           loader: './index',
           options: {
             runner: config.runner,
-            engine: config.engine,
             timeout: config.timeout,
             dependenciesRoot: './test/dependencies'
           }
@@ -26,7 +28,7 @@ function compile (config, callback) {
       ]
     },
     output: {
-      filename: './output.js'
+      filename: './output.txt'
     }
   })
   compiler.outputFileSystem = fs
@@ -45,7 +47,7 @@ function compile2 (config, done, successCallback) {
 }
 
 function readOutput () {
-  var fileContent = fs.readFileSync(path.resolve(__dirname, './output.js'))
+  var fileContent = fs.readFileSync(path.resolve(__dirname, './output.txt'))
   return fileContent.toString()
 }
 
@@ -61,30 +63,14 @@ test('loads a simple file', function (done) {
   })
 })
 
-test('loads with erb', function (done) {
-  compile2({ file: 'engine.js.erb', engine: 'erb' }, done, function (stats) {
+test('loads a html file with render and content_for', function (done) {
+  compile2({ file: 'index.html.erb' }, done, function (stats) {
     expect(stats.compilation.errors).toEqual([])
-    expectInOutput("var engine = 'erb'")
+    expectInOutput("<h1>Header</h1>")
+    expectInOutput("<p>Lorem ipsum sit dolor amet</p>")
     done()
   })
 })
-
-test('loads with erubis', function (done) {
-  compile2({ file: 'engine.js.erb', engine: 'erubis' }, done, function (stats) {
-    expect(stats.compilation.errors).toEqual([])
-    expectInOutput("var engine = 'erubis'")
-    done()
-  })
-})
-
-test('loads with erubi', function (done) {
-  compile2({ file: 'engine.js.erb', engine: 'erubi' }, done, function (stats) {
-    expect(stats.compilation.errors).toEqual([])
-    expectInOutput("var engine = 'erubi'")
-    done()
-  })
-})
-
 
 test('loads through a Rails-like runner', function (done) {
   compile2({ file: 'runner.js.erb', runner: './test/runner' }, done, function (stats) {
@@ -97,7 +83,7 @@ test('loads through a Rails-like runner', function (done) {
 test('times out with error', function (done) {
   compile2({ file: 'sleep.js.erb', runner: './test/runner', timeout: 1 }, done, function (stats) {
     expect(stats.compilation.errors[0].message).toMatch(
-      'rails-erb-loader took longer than the specified 1.0 second timeout'
+      'rails-action-view-loader took longer than the specified 1.0 second timeout'
     )
     done()
   })
