@@ -133,12 +133,20 @@ List dependencies in the comment. `.rb` extension is optional.
 /* rails-erb-loader-dependencies models/account models/user */
 ```
 
+```erb
+<% # rails-erb-loader-dependencies models/account models/user %>
+```
+
 #### Watch a whole directory
 
 To watch all files in a directory, end the path in a `/`.
 
 ```js
 /* rails-erb-loader-dependencies ../config/locales/ */
+```
+
+```erb
+<% # rails-erb-loader-dependencies ../config/locales/ %>
 ```
 
 ## Contribute

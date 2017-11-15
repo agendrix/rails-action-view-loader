@@ -98,29 +98,32 @@ test('times out with error', function (done) {
   })
 })
 
-test.skip('loads single file dependencies in dev', function (done) {
-  var prevEnv = process.env.NODE_ENV
-  compile2({ file: 'dependencies.js.erb' }, done, function (stats) {
-    process.env.NODE_ENV = 'development'
+test('loads single file dependencies in dev', function (done) {
+  var file = 'dependencies.js.erb';
+  compile2({ file: file }, done, function (stats) {
+    var resourcePath = path.resolve('./test/erb/' + file)
     expect(stats.compilation.errors).toEqual([])
-
-    // TODO: Check that dependencies/dependency.rb and dependencies/dependency/version.rb
-    // are being watched
-
+    expect(global.railsActionViewLoaderDependencies[resourcePath]).toEqual(
+      expect.arrayContaining([
+        path.resolve("./test/dependencies/dependency.rb"),
+        path.resolve("./test/dependencies/dependency/version.rb")
+      ])
+    )
     done()
   })
-  process.env.NODE_ENV = prevEnv
 })
 
-test.skip('loads directory dependencies in dev', function (done) {
-  var prevEnv = process.env.NODE_ENV
-  compile2({ file: 'dependencies-all.js.erb' }, done, function (stats) {
-    process.env.NODE_ENV = 'development'
+test('loads directory dependencies in dev', function (done) {
+  var file = 'dependencies-all.js.erb';
+  compile2({ file: file }, done, function (stats) {
+    var resourcePath = path.resolve('./test/erb/' + file)
     expect(stats.compilation.errors).toEqual([])
-
-    // TODO: Check that the whole dependencies tree is being watched
-
+    expect(global.railsActionViewLoaderDependencies[resourcePath]).toEqual(
+      expect.arrayContaining([
+        path.resolve("./test/dependencies/dependency.rb"),
+        path.resolve("./test/dependencies/dependency")
+      ])
+    )
     done()
   })
-  process.env.NODE_ENV = prevEnv
 })

@@ -14,7 +14,7 @@ function pushAll (dest, src) {
 var ioDelimiter = '_' + '_RAILS_ERB_LOADER_DELIMETER__'
 
 /* Match any block comments that start with the string `rails-erb-loader-*`. */
-var configCommentRegex = /\/\*\s*rails-erb-loader-([a-z-]*)\s*([\s\S]*?)\s*\*\//g
+var configCommentRegex = /(<%\s*#|\/\*)\s*rails-erb-loader-([a-z-]*)\s*([\s\S]*?)\s*(\*\/|%>)/g
 
 /* Absolute path to the Ruby script that does the ERB transformation. */
 var runnerPath = path.join(__dirname, 'erb_transformer.rb')
@@ -48,8 +48,8 @@ function parseDependencies (source, root) {
   var dependencies = []
   var match = null
   while ((match = configCommentRegex.exec(source))) {
-    var option = match[1]
-    var value = match[2]
+    var option = match[2]
+    var value = match[3]
     switch (option) {
       case 'dependency':
       case 'dependencies':
@@ -153,9 +153,14 @@ module.exports = function railsErbLoader (source, map) {
 
   // Dependencies are only useful in development, so don't bother searching the
   // file for them otherwise.
-  var dependencies = process.env.NODE_ENV === 'development'
+  var dependencies = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'
     ? parseDependencies(source, config.dependenciesRoot)
     : []
+
+  if (process.env.NODE_ENV == 'test') {
+    if (!global.railsActionViewLoaderDependencies) global.railsActionViewLoaderDependencies = {};
+    global.railsActionViewLoaderDependencies[this.resourcePath] = dependencies;
+  }
 
   // Parse the runner string before passing it down to `transfromSource`
   var runner = parseRunner(config.runner)
