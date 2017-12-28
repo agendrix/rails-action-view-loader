@@ -78,6 +78,9 @@ function transformSource (runner, config, source, map, callback) {
     ).concat(
       config.lookupPaths
     ),
+    {
+      env: process.env
+    },
     function (error, stdout, stderr) {
       // Output is delimited to filter out unwanted warnings or other output
       // that we don't want in our files.
