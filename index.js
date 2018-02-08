@@ -79,7 +79,8 @@ function transformSource (runner, config, source, map, callback) {
       config.lookupPaths
     ),
     {
-      env: process.env
+      env: process.env,
+      maxBuffer: 1000 * 1024
     },
     function (error, stdout, stderr) {
       // Output is delimited to filter out unwanted warnings or other output
