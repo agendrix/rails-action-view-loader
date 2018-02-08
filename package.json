@@ -1,6 +1,6 @@
 {
   "name": "rails-action-view-loader",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Embedded Ruby (`.erb`) webpack loader for Ruby projects that supports ActionView helpers (render, content_for, etc.).",
   "main": "index.js",
   "engines": {
