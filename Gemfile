@@ -1,3 +1,3 @@
 source "https://rubygems.org"
 
-gem "actionview", "~> 5.1"
+gem "actionview", "~> 6.0"

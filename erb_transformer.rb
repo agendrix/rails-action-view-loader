@@ -7,7 +7,7 @@ timeout = Float(timeout)
 def render(lookup_paths, source)
   lookup_context = ActionView::LookupContext.new(lookup_paths)
   template_handler = ActionView::Template.handler_for_extension("erb")
-  template = ActionView::Template.new(source, "inline template", template_handler, format: "text")
+  template = ActionView::Template.new(source, "inline template", template_handler, format: :text, locals: [])
 
   ActionView::Base.new(lookup_context).render(template: template)
 end
